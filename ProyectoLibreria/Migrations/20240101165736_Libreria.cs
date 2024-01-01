@@ -12,7 +12,7 @@ namespace ProyectoLibreria.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "autores",
+                name: "Autores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,11 +22,11 @@ namespace ProyectoLibreria.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_autores", x => x.Id);
+                    table.PrimaryKey("PK_Autores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "categorias",
+                name: "Categorias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -36,11 +36,11 @@ namespace ProyectoLibreria.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_categorias", x => x.Id);
+                    table.PrimaryKey("PK_Categorias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "usuarios",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -52,11 +52,11 @@ namespace ProyectoLibreria.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_usuarios", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "libros",
+                name: "Libros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -69,17 +69,17 @@ namespace ProyectoLibreria.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_libros", x => x.Id);
+                    table.PrimaryKey("PK_Libros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_libros_autores_AutorId",
+                        name: "FK_Libros_Autores_AutorId",
                         column: x => x.AutorId,
-                        principalTable: "autores",
+                        principalTable: "Autores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_libros_categorias_CategoriaId",
+                        name: "FK_Libros_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
-                        principalTable: "categorias",
+                        principalTable: "Categorias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -100,33 +100,33 @@ namespace ProyectoLibreria.Migrations
                 {
                     table.PrimaryKey("PK_Ventas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ventas_libros_LibroId",
+                        name: "FK_Ventas_Libros_LibroId",
                         column: x => x.LibroId,
-                        principalTable: "libros",
+                        principalTable: "Libros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ventas_usuarios_UsuarioId",
+                        name: "FK_Ventas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
-                        principalTable: "usuarios",
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_categorias_Nombre",
-                table: "categorias",
+                name: "IX_Categorias_Nombre",
+                table: "Categorias",
                 column: "Nombre",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_libros_AutorId",
-                table: "libros",
+                name: "IX_Libros_AutorId",
+                table: "Libros",
                 column: "AutorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_libros_CategoriaId",
-                table: "libros",
+                name: "IX_Libros_CategoriaId",
+                table: "Libros",
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
@@ -147,16 +147,16 @@ namespace ProyectoLibreria.Migrations
                 name: "Ventas");
 
             migrationBuilder.DropTable(
-                name: "libros");
+                name: "Libros");
 
             migrationBuilder.DropTable(
-                name: "usuarios");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "autores");
+                name: "Autores");
 
             migrationBuilder.DropTable(
-                name: "categorias");
+                name: "Categorias");
         }
     }
 }

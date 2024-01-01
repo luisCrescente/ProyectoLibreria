@@ -8,11 +8,11 @@ namespace ProyectoLibreria.Models.Entity
         {
         }
 
-        public DbSet<Autor> autores { get; set; }
-        public DbSet<Categoria> categorias { get; set; }
-        public DbSet<Libro> libros { get; set; }
+        public DbSet<Autor> Autores { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Libro> Libros { get; set; }
         public DbSet<Venta> Ventas { get; set; }
-        public DbSet<Usuario> usuarios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

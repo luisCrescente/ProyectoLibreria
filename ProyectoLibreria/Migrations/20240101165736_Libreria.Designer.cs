@@ -12,7 +12,7 @@ using ProyectoLibreria.Models.Entity;
 namespace ProyectoLibreria.Migrations
 {
     [DbContext(typeof(LibreriaContext))]
-    [Migration("20240101162706_Libreria")]
+    [Migration("20240101165736_Libreria")]
     partial class Libreria
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace ProyectoLibreria.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("autores");
+                    b.ToTable("Autores");
                 });
 
             modelBuilder.Entity("ProyectoLibreria.Models.Entity.Categoria", b =>
@@ -66,7 +66,7 @@ namespace ProyectoLibreria.Migrations
                     b.HasIndex("Nombre")
                         .IsUnique();
 
-                    b.ToTable("categorias");
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("ProyectoLibreria.Models.Entity.Libro", b =>
@@ -100,7 +100,7 @@ namespace ProyectoLibreria.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("libros");
+                    b.ToTable("Libros");
                 });
 
             modelBuilder.Entity("ProyectoLibreria.Models.Entity.Usuario", b =>
@@ -128,7 +128,7 @@ namespace ProyectoLibreria.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("usuarios");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("ProyectoLibreria.Models.Entity.Venta", b =>
