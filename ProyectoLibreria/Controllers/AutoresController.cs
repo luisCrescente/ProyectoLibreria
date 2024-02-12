@@ -68,6 +68,7 @@ namespace ProyectoLibreria.Controllers
                 {
                     _context.Update(autor);
                     await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = "Autor actualizado exitosamente";
                     return RedirectToAction("Lista");
                 }
                 catch ( Exception ex)
@@ -76,6 +77,33 @@ namespace ProyectoLibreria.Controllers
                 }
             }
                 return View(autor);
+        }
+
+        public async Task<IActionResult> Eliminar(int? id)
+        {
+            if (id == null || _context.Autores == null)
+            {
+                return NotFound();
+            }
+
+            var autor = await _context.Autores
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (autor == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Autores.Remove(autor);
+                await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Autor elminiado con exitosamente";
+            }catch ( Exception ex )
+            {
+                ModelState.AddModelError(ex.Message, "Ocurrio un error, no se pudo eliminar el registro");
+            }
+            return RedirectToAction(nameof(Lista));
         }
     }
 }
