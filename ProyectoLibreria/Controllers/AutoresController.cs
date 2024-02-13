@@ -12,9 +12,15 @@ namespace ProyectoLibreria.Controllers
         {
             _context = context;
         }
+
         public async Task<IActionResult> Lista()
         {
             return View(await _context.Autores.ToListAsync());
+        }
+
+        public IActionResult Crear()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -36,8 +42,6 @@ namespace ProyectoLibreria.Controllers
             }
             return View(autor);
         }
-
-
         public async Task<IActionResult> Editar(int? id)
         {
             if (id == null || _context.Autores == null)
@@ -54,10 +58,9 @@ namespace ProyectoLibreria.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Editar(int id, Autor autor)
         {
-            if(id != autor.Id)
+            if (id != autor.Id)
             {
                 return NotFound();
             }
@@ -71,12 +74,12 @@ namespace ProyectoLibreria.Controllers
                     TempData["AlertMessage"] = "Autor actualizado exitosamente";
                     return RedirectToAction("Lista");
                 }
-                catch ( Exception ex)
+                catch (Exception ex)
                 {
                     ModelState.AddModelError(ex.Message, "Ocurrio un error al actualizar ");
                 }
             }
-                return View(autor);
+            return View(autor);
         }
 
         public async Task<IActionResult> Eliminar(int? id)
@@ -88,7 +91,7 @@ namespace ProyectoLibreria.Controllers
 
             var autor = await _context.Autores
                 .FirstOrDefaultAsync(m => m.Id == id);
-
+                 
             if (autor == null)
             {
                 return NotFound();
@@ -99,7 +102,8 @@ namespace ProyectoLibreria.Controllers
                 _context.Autores.Remove(autor);
                 await _context.SaveChangesAsync();
                 TempData["AlertMessage"] = "Autor elminiado con exitosamente";
-            }catch ( Exception ex )
+            }
+            catch (Exception ex)
             {
                 ModelState.AddModelError(ex.Message, "Ocurrio un error, no se pudo eliminar el registro");
             }
