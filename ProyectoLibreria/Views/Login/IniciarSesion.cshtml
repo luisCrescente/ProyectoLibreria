@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Iniciar Sesión</title>
+    <!-- Incluir estilos de Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="container mt-5 pt-5">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-4 col-md-6">
+
+                <div class="card">
+                    <div class="card-header">
+                        <!-- Encabezado de la tarjeta -->
+                        Iniciar Sesión
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Formulario de inicio de sesión -->
+                        <form asp-controller="Login" asp-action="IniciarSesion" method="post">
+                            <!-- Campo para el correo electrónico -->
+                            <input class="form-control mb-3" type="text" placeholder="Correo" required name="correo" />
+                            <!-- Campo para la contraseña -->
+                            <input class="form-control mb-3" type="password" placeholder="Contraseña" required name="clave" />
+                            <!-- Botón para enviar el formulario -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                            </div>
+                            <!-- Mostrar mensaje de error si existe -->
+                            @if (ViewData["Mensaje"] != null)
+                            {
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["Mensaje"]
+                                    </div>
+                                </div>
+                            }
+                            <!-- Enlace para registrarse si no tiene una cuenta -->
+                            ¿No tienes una cuenta? <a href="@Url.Action("Registro","Login")"> Regístrate!</a>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Incluir scripts de jQuery y Bootstrap -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
