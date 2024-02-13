@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoLibreria.Models.Entity;
+using System;
+using System.Threading.Tasks;
 
 namespace ProyectoLibreria.Controllers
 {
@@ -13,16 +15,19 @@ namespace ProyectoLibreria.Controllers
             _context = context;
         }
 
+        // Método para mostrar la lista de autores
         public async Task<IActionResult> Lista()
         {
             return View(await _context.Autores.ToListAsync());
         }
 
+        // Método para mostrar el formulario de creación de autor
         public IActionResult Crear()
         {
             return View();
         }
 
+        // Método para procesar la creación de un nuevo autor
         [HttpPost]
         public async Task<IActionResult> Crear(Autor autor)
         {
@@ -30,6 +35,7 @@ namespace ProyectoLibreria.Controllers
             {
                 try
                 {
+                    // Agrega el nuevo autor a la base de datos y redirige a la lista de autores
                     _context.Add(autor);
                     await _context.SaveChangesAsync();
                     TempData["AlertMessage"] = "Autor creado exitosamente!!!";
@@ -37,11 +43,14 @@ namespace ProyectoLibreria.Controllers
                 }
                 catch
                 {
+                    // Maneja cualquier error durante la creación del autor
                     ModelState.AddModelError(String.Empty, "Ha ocurrido un error");
                 }
             }
             return View(autor);
         }
+
+        // Método para mostrar el formulario de edición de autor
         public async Task<IActionResult> Editar(int? id)
         {
             if (id == null || _context.Autores == null)
@@ -49,6 +58,7 @@ namespace ProyectoLibreria.Controllers
                 return NotFound();
             }
 
+            // Busca el autor por su ID y lo muestra en el formulario de edición
             var autor = await _context.Autores.FindAsync(id);
             if (autor == null)
             {
@@ -57,6 +67,7 @@ namespace ProyectoLibreria.Controllers
             return View(autor);
         }
 
+        // Método para procesar la edición de un autor existente
         [HttpPost]
         public async Task<IActionResult> Editar(int id, Autor autor)
         {
@@ -69,6 +80,7 @@ namespace ProyectoLibreria.Controllers
             {
                 try
                 {
+                    // Actualiza el autor en la base de datos y redirige a la lista de autores
                     _context.Update(autor);
                     await _context.SaveChangesAsync();
                     TempData["AlertMessage"] = "Autor actualizado exitosamente";
@@ -76,12 +88,14 @@ namespace ProyectoLibreria.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(ex.Message, "Ocurrio un error al actualizar ");
+                    // Maneja cualquier error durante la edición del autor
+                    ModelState.AddModelError(ex.Message, "Ocurrió un error al actualizar ");
                 }
             }
             return View(autor);
         }
 
+        // Método para eliminar un autor
         public async Task<IActionResult> Eliminar(int? id)
         {
             if (id == null || _context.Autores == null)
@@ -89,9 +103,8 @@ namespace ProyectoLibreria.Controllers
                 return NotFound();
             }
 
-            var autor = await _context.Autores
-                .FirstOrDefaultAsync(m => m.Id == id);
-                 
+            // Busca el autor por su ID y lo elimina de la base de datos
+            var autor = await _context.Autores.FirstOrDefaultAsync(m => m.Id == id);
             if (autor == null)
             {
                 return NotFound();
@@ -101,11 +114,12 @@ namespace ProyectoLibreria.Controllers
             {
                 _context.Autores.Remove(autor);
                 await _context.SaveChangesAsync();
-                TempData["AlertMessage"] = "Autor elminiado con exitosamente";
+                TempData["AlertMessage"] = "Autor eliminado exitosamente";
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(ex.Message, "Ocurrio un error, no se pudo eliminar el registro");
+                // Maneja cualquier error durante la eliminación del autor
+                ModelState.AddModelError(ex.Message, "Ocurrió un error, no se pudo eliminar el registro");
             }
             return RedirectToAction(nameof(Lista));
         }

@@ -1,0 +1,46 @@
+﻿@model ProyectoLibreria.Models.Entity.Categoria
+@{
+    // Establece el título de la página
+    ViewData["Title"] = "Editar";
+    // Deshabilita el uso del layout por defecto para esta vista
+    Layout = null;
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header text-center">
+            <!-- Encabezado de la tarjeta para editar categoría -->
+            <h5>Editar Categoria</h5>
+        </div>
+        <div class="card-body text-center">
+            <form asp-action="Editar">
+                <!-- Resumen de errores de validación -->
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Campo oculto para almacenar el Id de la categoría -->
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label></label>
+                    <!-- Campo para editar el nombre de la categoría -->
+                    <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+                    <!-- Mensaje de error para el nombre -->
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <!-- Campo para editar la descripción de la categoría -->
+                    <input asp-for="Descripcion" class="form-control" placeholder="Descripción" />
+                    <!-- Mensaje de error para la descripción -->
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <!-- Botón para enviar el formulario y guardar los cambios -->
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+                        <!-- Botón para cancelar la operación -->
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

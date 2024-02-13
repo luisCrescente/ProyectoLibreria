@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ProyectoLibreria.Models.Entity.Categoria>
+@{
+    // Establece el título de la página
+    ViewData["Title"] = "Lista";
+}
+
+@section Estilos {
+    <!-- Incluye el estilo de DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+@if (TempData["ALertMessage"] != null)
+{
+    <!-- Muestra un mensaje de éxito si existe -->
+    <div class=" alert alert-success">
+        <strong> Ok!! </strong>@TempData["AlertMessage"]
+    </div>
+}
+
+<p>
+    <!-- Botón para agregar una nueva categoría -->
+    <a onclick="showInPopup('@Url.Action("Crear", "Categorias", new { id = 0 }, Context.Request.Scheme)' ,
+    '')" class="btn btn-sm btn-primary text-white"><i class="fa fa-plus-circle"></i> Agregar una Categoria</a>
+</p>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class=" card-header text-center">
+            <!-- Encabezado de la lista de categorías -->
+            <h5>Lista de Categorias</h5>
+        </div>
+        <div class=" card-body">
+            <!-- Tabla que muestra las categorías -->
+            <table id="categoria" class="table table-hover table responsive table stripped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <!-- Muestra cada categoría en una fila de la tabla -->
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <td> @Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
+                            <td>
+                                <!-- Botones para editar y eliminar cada categoría -->
+                                <a onclick="showInPopup('@Url.Action("Editar", "Categorias", new { id = item.Id }, Context.Request.Scheme)' ,
+                    'Actualizar Categoria')" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil-alt"></i> </a>
+                                <button data-id="@item.Id" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal"
+                                        data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Secciones parciales para modales -->
+<partial name="_MostrarModal" />
+<partial name="_ModalEliminar" />
+
+
+@section Scripts {
+
+    <!-- Script para abrir modales -->
+    <script src="~/js/showmodal.js"></script>
+
+    <!-- Script para DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicializa DataTables para la tabla de categorías
+            $('#Categoria').DataTable(
+                {
+                    "language": {
+                        url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                    },
+                });
+        });
+    </script>
+
+    <script>
+        // Abre el modal de confirmación para eliminar una categoría
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Categorias/Eliminar/', false);
+    </script>
+}
