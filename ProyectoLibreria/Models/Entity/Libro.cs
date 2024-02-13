@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProyectoLibreria.Models.Entity
 {
@@ -19,5 +20,17 @@ namespace ProyectoLibreria.Models.Entity
 
         [Display(Name = "Imagen")]
         public string URLImagen { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un autor")]
+        public int AutorId { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una categoria")]
+        public int CategoriaId { get; set; }
+
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> Categorias { get; set; }
+        [NotMapped]
+        public IEnumerable<SelectListItem> Autores { get; set; }
     }
 }
